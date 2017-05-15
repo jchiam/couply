@@ -1,0 +1,40 @@
+{
+  extends: "airbnb",
+  env: {
+    browser: true
+  },
+  rules: {
+    arrow-body-style: ["warn", "as-needed"],
+    comma-dangle: ["warn", "never"],
+    consistent-return: "warn",
+    import/no-extraneous-dependencies: ["warn", { devDependencies: true }],
+    import/prefer-default-export: "warn",
+    max-len: ["warn", 120],
+    no-else-return: "off",
+    no-param-reassign: "warn",
+    no-restricted-syntax: "warn",
+    no-underscore-dangle: ["warn", { allow: ["_csrf_token", "_isSetup"] }],
+    no-unused-vars: "warn",
+    prefer-template: "off",
+    prefer-const: "off",
+    prefer-stateless-function: "off",
+    quote-props: ["error", "consistent-as-needed"],
+    react/jsx-no-bind: [0],
+    react/prefer-stateless-function: "off",
+    react/require-extension: "off",
+    react/self-closing-comp: "warn"
+  },
+  parserOptions: {
+    ecmaVersion: 6,
+    ecmaFeatures: {
+      experimentalObjectRestSpread: true,
+      jsx: true
+    }
+  },
+  settings: {
+    import/resolver: "webpack"
+  },
+  plugins: [
+    "react"
+  ]
+}
