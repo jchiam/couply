@@ -38,8 +38,8 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new DotenvPlugin({
-      sample: './.env.example',
-      path: './.env'
+      sample: '.env.example',
+      path: '.env'
     }),
     new HtmlWebpackPlugin({
       template: 'src/index.ejs',
