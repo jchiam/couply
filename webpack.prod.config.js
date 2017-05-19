@@ -36,8 +36,8 @@ module.exports = {
   },
   plugins: [
     new DotenvPlugin({
-      sample: './.env.example',
-      path: './.env'
+      sample: '.env.example',
+      path: '.env'
     }),
     new HtmlWebpackPlugin({
       template: 'src/index.ejs',
