@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
-import combinedReducer from 'reducers/combined_reducer';
+import combinedReducer from 'reducers/combinedReducer';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
