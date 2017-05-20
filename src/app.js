@@ -6,9 +6,13 @@ import { Router } from 'react-router';
 import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import store from 'store';
 import routes from 'routes';
+
+// needed for onTouchTap
+injectTapEventPlugin();
 
 // check environment
 const isProduction = process.env.NODE_ENV === 'production';
