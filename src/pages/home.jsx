@@ -8,6 +8,13 @@ import { fetchEvents } from 'actions';
 import DataStates from 'constants/dataStates';
 
 const styles = {
+  home: {
+    backgroundImage: `url(${process.env.WALLPAPER})`,
+    backgroundSize: 'cover',
+    height: '100vh',
+    margin: -8,
+    padding: 8
+  },
   header: {
     display: 'flex',
     justifyContent: 'center'
@@ -124,9 +131,8 @@ class HomePage extends Component {
   }
 
   render() {
-    const wallpaper = process.env.WALLPAPER;
     return (
-      <div style={{ backgroundImage: `url(${wallpaper})`, backgroundSize: 'cover', height: '100vh', margin: -8, padding: 8 }}>
+      <div style={styles.home}>
         {HomePage.renderHeader()}
         {this.renderBody()}
       </div>
