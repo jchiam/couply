@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import moment from 'moment';
+import Gallery from 'react-grid-gallery';
 
 import { fetchEvents } from 'actions';
 import DataStates from 'constants/dataStates';
@@ -40,6 +41,23 @@ class HomePage extends Component {
     );
   }
 
+  static renderGallery(photos) {
+    if (!photos) {
+      return null;
+    }
+
+    const galleryPhotos = [];
+    photos.forEach((photo) => {
+      galleryPhotos.push({
+        src: photo,
+        thumbnail: photo,
+        thumbnailWidth: 320,
+        thumbnailHeight: 320
+      });
+    });
+    return <Gallery images={galleryPhotos} />;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -73,6 +91,9 @@ class HomePage extends Component {
             >
               left
             </button>
+            <div style={{ display: 'block', overflow: 'auto', width: '100%', minHeight: '1px' }}>
+              {HomePage.renderGallery(events[index].photos)}
+            </div>
             <button
               onClick={() => {
                 if (index < events.length - 1) {
@@ -103,8 +124,9 @@ class HomePage extends Component {
   }
 
   render() {
+    const wallpaper = process.env.WALLPAPER;
     return (
-      <div>
+      <div style={{ backgroundImage: `url(${wallpaper})`, backgroundSize: 'cover', height: '100vh', margin: -8, padding: 8 }}>
         {HomePage.renderHeader()}
         {this.renderBody()}
       </div>
@@ -116,7 +138,8 @@ HomePage.propTypes = {
   events: PropTypes.arrayOf(
     PropTypes.shape({
       date: PropTypes.string.isRequired,
-      title: PropTypes.string
+      title: PropTypes.string,
+      photos: PropTypes.arrayOf(PropTypes.string)
     })
   ),
   dataState: PropTypes.string.isRequired,
@@ -130,6 +153,7 @@ HomePage.defaultProps = {
 function mapStateToProps(state) {
   return {
     events: state.home.events,
+    wallpaper: state.home.wallpaper,
     dataState: state.home.dataState
   };
 }
