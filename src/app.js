@@ -6,6 +6,7 @@ import { Router } from 'react-router';
 import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import store from 'store';
@@ -19,17 +20,21 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 if (isProduction || !module.hot) {
   ReactDOM.render(
-    <Provider store={store}>
-      <Router children={routes} history={createBrowserHistory()} />
-    </Provider>,
+    <MuiThemeProvider>
+      <Provider store={store}>
+        <Router children={routes} history={createBrowserHistory()} />
+      </Provider>
+    </MuiThemeProvider>,
     document.getElementById('accorde-root')
   );
 } else {
   ReactDOM.render(
     <AppContainer>
-      <Provider store={store}>
-        <Router children={routes} history={createBrowserHistory()} key={Math.random()} />
-      </Provider>
+      <MuiThemeProvider>
+        <Provider store={store}>
+          <Router children={routes} history={createBrowserHistory()} key={Math.random()} />
+        </Provider>
+      </MuiThemeProvider>
     </AppContainer>,
     document.getElementById('accorde-root')
   );
