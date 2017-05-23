@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import Gallery from 'react-grid-gallery';
+import { red100 } from 'material-ui/styles/colors';
 
 import { fetchEvents } from 'actions';
 import DataStates from 'constants/dataStates';
@@ -11,8 +12,11 @@ const styles = {
   home: {
     backgroundImage: `url(${process.env.WALLPAPER})`,
     backgroundSize: 'cover',
+    backgroundColor: red100,
     height: '100vh',
-    margin: -8,
+    marginLeft: -8,
+    marginRight: -8,
+    marginBottom: -8,
     padding: 8
   },
   header: {
@@ -118,13 +122,8 @@ class TimelinePage extends Component {
   }
 
   renderBody() {
-    const { START_YEAR, START_MONTH, START_DAY } = process.env;
-    const startDate = moment(`${START_YEAR}-${START_MONTH}-${START_DAY}`, 'YYYY-MM-DD');
-    const currentDate = moment();
     return (
       <div style={styles.body}>
-        <h2>{currentDate.diff(startDate, 'days')}</h2>
-        <h2>days and counting</h2>
         {this.renderTimeline()}
       </div>
     );

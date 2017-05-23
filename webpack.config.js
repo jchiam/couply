@@ -41,6 +41,7 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new ExtractTextPlugin('style.css'),
     new DotenvPlugin({
       sample: '.env.example',
       path: '.env'

@@ -16,7 +16,6 @@ const styles = {
   headerBar: {
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: 8,
     height: 50,
     background: red100
   },

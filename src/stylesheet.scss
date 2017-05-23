@@ -1,0 +1,88 @@
+@import 'node_modules/sass-material-colors/sass/sass-material-colors';
+
+@mixin rotate($rotate) {
+  transform: rotate($rotate);
+}
+
+@mixin transform-origin($origin) {
+  transform-origin: $origin;
+}
+
+@mixin heart($width: 50px, $color: hotpink) {
+  $half: ($width / 2);
+  $height: ($half * 1.6);
+
+  display: inline-block;
+  position: relative;
+  width: $width;
+  height: $height;
+
+  &::before,
+  &::after {
+    @include rotate(-45deg);
+    @include transform-origin(0 100%);
+    position: absolute;
+    content: '';
+    left: $half;
+    top: 0;
+    width: $half;
+    height: $height;
+    background: $color;
+    border-radius: $half $half 0 0;
+  }
+
+  &::after {
+    @include rotate(45deg) ;
+    @include transform-origin(100% 100%);
+    left: 0;
+  }
+}
+
+.home {
+  height: 100%;
+  margin: -8;
+  background-color: material-color('red', '100');
+
+  .header {
+    @include heart(350px, material-color('cyan', '50'));
+    align-self: flex-end;
+    display: flex;
+    height: 100%;
+    margin-bottom: 100px;
+    margin-left: 50px;
+    margin-right: -400px;
+    width: 20vw;
+
+    .contents {
+      color: material-color('red', '200');
+      font-size: 36px;
+      margin-left: 80px;
+      margin-right: -100px;
+      margin-top: 60px;
+      text-align: center;
+      width: 200px;
+      z-index: 2;
+    }
+
+    .content-less-em {
+      font-family: 'Pacifico', cursive;
+      font-size: 24px;
+    }
+
+    .content-more-em {
+      font-family: 'Baloo', cursive;
+      font-size: 72px;
+      font-style: bold;
+    }
+  }
+
+  .body {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .wallpaper {
+    height: calc(100vh - 40px);
+    width: 110vw;
+  }
+}
