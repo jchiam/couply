@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import FlatButton from 'material-ui/FlatButton';
 import { red100 } from 'material-ui/styles/colors';
 
@@ -15,7 +16,6 @@ const styles = {
   headerBar: {
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: 8,
     height: 50,
     background: red100
   },
@@ -31,7 +31,7 @@ const styles = {
   }
 };
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,18 +41,25 @@ export default class App extends Component {
 
   renderHeaderBar() {
     const { headerState } = this.state;
+    const { history } = this.props;
     return (
       <div style={styles.headerBar}>
         <FlatButton
           style={headerState === headerStates.HOME ? styles.headerButtonSelected : styles.headerButton}
           label="Home"
-          onClick={() => this.setState({ headerState: headerStates.HOME })}
+          onClick={() => {
+            this.setState({ headerState: headerStates.HOME });
+            history.push('/');
+          }}
           secondary
         />
         <FlatButton
           style={headerState === headerStates.TIMELINE ? styles.headerButtonSelected : styles.headerButton}
           label="Timeline"
-          onClick={() => this.setState({ headerState: headerStates.TIMELINE })}
+          onClick={() => {
+            this.setState({ headerState: headerStates.TIMELINE });
+            history.push('/timeline');
+          }}
           secondary
         />
       </div>
@@ -70,9 +77,12 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  history: PropTypes.object.isRequired  // eslint-disable-line react/forbid-prop-types
 };
 
 App.defaultProps = {
   children: null
 };
+
+export default withRouter(App);

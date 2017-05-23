@@ -9,7 +9,8 @@ module.exports = {
   entry: './src/app.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.[hash].js'
+    filename: 'bundle.[hash].js',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -43,6 +44,7 @@ module.exports = {
       template: 'src/index.ejs',
       inject: 'body'
     }),
+    new ExtractTextPlugin('style.css'),
     new webpack.optimize.UglifyJsPlugin({
       comments: false,
       compress: {
