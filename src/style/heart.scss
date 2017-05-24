@@ -1,0 +1,33 @@
+@import 'src/style/mixins';
+
+$default-heart-color: #dd69b4;
+
+@mixin heart($width: 50px, $color: $default-heart-color) {
+  $half: ($width / 2);
+  $height: ($half * 1.6);
+
+  display: inline-block;
+  position: relative;
+  width: $width;
+  height: $height;
+
+  &::before,
+  &::after {
+    @include rotate(-45deg);
+    @include transform-origin(0 100%);
+    background: $color;
+    border-radius: $half $half 0 0;
+    content: '';
+    height: $height;
+    left: $half;
+    position: absolute;
+    top: 0;
+    width: $half;
+  }
+
+  &::after {
+    @include rotate(45deg) ;
+    @include transform-origin(100% 100%);
+    left: 0;
+  }
+}
