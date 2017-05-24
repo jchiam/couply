@@ -2,33 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import FlatButton from 'material-ui/FlatButton';
-import { red100 } from 'material-ui/styles/colors';
 
 const headerStates = {
   HOME: 'home',
   TIMELINE: 'timeline'
-};
-
-const styles = {
-  app: {
-    margin: -8
-  },
-  headerBar: {
-    display: 'flex',
-    justifyContent: 'center',
-    height: 50,
-    background: red100
-  },
-  headerButton: {
-    height: 50,
-    border: 'none',
-    margin: '0 10px'
-  },
-  headerButtonSelected: {
-    height: 50,
-    borderBottom: '5px solid red',
-    margin: '0 10px'
-  }
 };
 
 class App extends Component {
@@ -43,32 +20,36 @@ class App extends Component {
     const { headerState } = this.state;
     const { history } = this.props;
     return (
-      <div style={styles.headerBar}>
-        <FlatButton
-          style={headerState === headerStates.HOME ? styles.headerButtonSelected : styles.headerButton}
-          label="Home"
-          onClick={() => {
-            this.setState({ headerState: headerStates.HOME });
-            history.push('/');
-          }}
-          secondary
-        />
-        <FlatButton
-          style={headerState === headerStates.TIMELINE ? styles.headerButtonSelected : styles.headerButton}
-          label="Timeline"
-          onClick={() => {
-            this.setState({ headerState: headerStates.TIMELINE });
-            history.push('/timeline');
-          }}
-          secondary
-        />
+      <div className="header-bar">
+        <div className="header-button">
+          <FlatButton
+            labelStyle={headerState === headerStates.HOME ? { fontWeight: 'bold' } : null}
+            label="Home"
+            onClick={() => {
+              this.setState({ headerState: headerStates.HOME });
+              history.push('/');
+            }}
+            secondary
+          />
+        </div>
+        <div className="header-button">
+          <FlatButton
+            labelStyle={headerState === headerStates.TIMELINE ? { fontWeight: 'bold' } : null}
+            label="Timeline"
+            onClick={() => {
+              this.setState({ headerState: headerStates.TIMELINE });
+              history.push('/timeline');
+            }}
+            secondary
+          />
+        </div>
       </div>
     );
   }
 
   render() {
     return (
-      <div style={styles.app}>
+      <div>
         {this.renderHeaderBar()}
         {this.props.children}
       </div>

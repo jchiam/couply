@@ -11,7 +11,7 @@
     "stage": "yarn build && firebase serve",
     "deploy": "yarn lint && yarn build && firebase deploy",
     "lint-js": "eslint src --ext .jsx",
-    "lint-scss": "sass-lint *.scss -v -q",
+    "lint-scss": "sass-lint style/*.scss -v -q",
     "lint": "yarn lint-js && yarn lint-scss",
     "prepush": "yarn lint"
   },

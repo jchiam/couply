@@ -12,7 +12,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import store from 'store';
 import routes from 'routes';
 
-import 'stylesheet.scss';
+import 'style/stylesheet.scss';
 
 // needed for onTouchTap
 injectTapEventPlugin();
