@@ -3,36 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import Gallery from 'react-grid-gallery';
-import { red100 } from 'material-ui/styles/colors';
 
+import LeftChevron from 'images/chevron_left.svg';
+import RightChevron from 'images/chevron_right.svg';
 import { fetchAlbums } from 'actions';
 import DataStates from 'constants/dataStates';
 import { PhotoProps } from 'propTypes';
-
-const styles = {
-  home: {
-    backgroundColor: red100,
-    height: '100vh',
-    marginLeft: -8,
-    marginRight: -8,
-    marginBottom: -8,
-    padding: 8
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  body: {
-    textAlign: 'center'
-  },
-  timelineContainer: {
-    textAlign: 'center'
-  },
-  timelinePane: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  }
-};
 
 class TimelinePage extends Component {
 
@@ -40,17 +16,6 @@ class TimelinePage extends Component {
     return moment(`${startDay} ${startMonth} ${startYear}`, 'DD MM YYYY')
     .format('DD MMM YYYY');
   }
-
-  static renderHeader() {
-    return (
-      <div style={styles.header}>
-        <h1>Jon</h1>
-        <img alt="alt couple" />
-        <h1>Becca</h1>
-      </div>
-    );
-  }
-
 
   constructor(props) {
     super(props);
@@ -81,35 +46,32 @@ class TimelinePage extends Component {
         thumbnailHeight: 320
       });
     });
-    return <Gallery images={galleryPhotos} />;
+
+    return (
+      <div className="gallery">
+        <Gallery images={galleryPhotos} />
+      </div>
+    );
   }
 
   renderTimeline() {
     const { dataState } = this.props;
-
     if (dataState === DataStates.Fetched) {
       return (
-        <div style={styles.timelineContainer}>
+        <div className="timeline-container">
+          <LeftChevron width={30} />
           {this.renderGallery()}
+          <RightChevron width={30} />
         </div>
       );
     }
     return null;
   }
 
-  renderBody() {
-    return (
-      <div style={styles.body}>
-        {this.renderTimeline()}
-      </div>
-    );
-  }
-
   render() {
     return (
-      <div style={styles.home}>
-        {TimelinePage.renderHeader()}
-        {this.renderBody()}
+      <div className="timeline">
+        {this.renderTimeline()}
       </div>
     );
   }

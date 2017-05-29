@@ -32,6 +32,10 @@ module.exports = {
           fallback: 'style-loader',
           use: ['css-loader', 'sass-loader', 'import-glob-loader']
         })
+      },
+      {
+        test: /\.svg$/,
+        use: ['babel-loader', 'react-svg-loader']
       }
     ]
   },
