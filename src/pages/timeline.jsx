@@ -5,13 +5,12 @@ import moment from 'moment';
 import Gallery from 'react-grid-gallery';
 import { red100 } from 'material-ui/styles/colors';
 
-import { fetchEvents } from 'actions';
+import { fetchAlbums } from 'actions';
 import DataStates from 'constants/dataStates';
+import { PhotoProps } from 'propTypes';
 
 const styles = {
   home: {
-    backgroundImage: `url(${process.env.WALLPAPER})`,
-    backgroundSize: 'cover',
     backgroundColor: red100,
     height: '100vh',
     marginLeft: -8,
@@ -52,22 +51,6 @@ class TimelinePage extends Component {
     );
   }
 
-  static renderGallery(photos) {
-    if (!photos) {
-      return null;
-    }
-
-    const galleryPhotos = [];
-    photos.forEach((photo) => {
-      galleryPhotos.push({
-        src: photo,
-        thumbnail: photo,
-        thumbnailWidth: 320,
-        thumbnailHeight: 320
-      });
-    });
-    return <Gallery images={galleryPhotos} />;
-  }
 
   constructor(props) {
     super(props);
@@ -81,40 +64,33 @@ class TimelinePage extends Component {
     fetch();
   }
 
+  renderGallery() {
+    const { index } = this.state;
+    const { albums } = this.props;
+
+    if (!albums || albums.length === 0) {
+      return null;
+    }
+
+    const galleryPhotos = [];
+    albums[index].photos.forEach((photo) => {
+      galleryPhotos.push({
+        src: photo.secure_url,
+        thumbnail: photo.secure_url,
+        thumbnailWidth: 320,
+        thumbnailHeight: 320
+      });
+    });
+    return <Gallery images={galleryPhotos} />;
+  }
+
   renderTimeline() {
     const { dataState } = this.props;
 
     if (dataState === DataStates.Fetched) {
-      const { index } = this.state;
-      const { events } = this.props;
       return (
         <div style={styles.timelineContainer}>
-          <div>
-            <h4>{events[index].date}<br />{events[index].title}</h4>
-          </div>
-          <div style={styles.timelinePane}>
-            <button
-              onClick={() => {
-                if (index > 0) {
-                  this.setState({ index: index - 1 });
-                }
-              }}
-            >
-              left
-            </button>
-            <div style={{ display: 'block', overflow: 'auto', width: '100%', minHeight: '1px' }}>
-              {TimelinePage.renderGallery(events[index].photos)}
-            </div>
-            <button
-              onClick={() => {
-                if (index < events.length - 1) {
-                  this.setState({ index: index + 1 });
-                }
-              }}
-            >
-              right
-            </button>
-          </div>
+          {this.renderGallery()}
         </div>
       );
     }
@@ -140,32 +116,21 @@ class TimelinePage extends Component {
 }
 
 TimelinePage.propTypes = {
-  events: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      title: PropTypes.string,
-      photos: PropTypes.arrayOf(PropTypes.string)
-    })
-  ),
+  albums: PropTypes.arrayOf(PhotoProps).isRequired,
   dataState: PropTypes.string.isRequired,
   fetch: PropTypes.func.isRequired
 };
 
-TimelinePage.defaultProps = {
-  events: []
-};
-
 function mapStateToProps(state) {
   return {
-    events: state.home.events,
-    wallpaper: state.home.wallpaper,
-    dataState: state.home.dataState
+    albums: state.timeline.albums,
+    dataState: state.timeline.dataState
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetch: () => dispatch(fetchEvents())
+    fetch: () => dispatch(fetchAlbums())
   };
 }
 

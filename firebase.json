@@ -5,10 +5,8 @@
   "hosting": {
     "public": "dist",
     "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
+      { "source": "/cloudinary", "function": "cloudinary" },
+      { "source": "**", "destination": "/index.html" }
     ]
   }
 }
