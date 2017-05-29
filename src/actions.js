@@ -1,17 +1,20 @@
+import axios from 'axios';
+import cache from 'memory-cache';
 import Actions from 'constants/actions';
 
-import { firebaseDB } from 'firebaseUtils';
-
-export function fetchEvents() {
+export function fetchAlbums() {
   return (dispatch) => {
-    dispatch({ type: Actions.FETCHING_EVENTS });
+    dispatch({ type: Actions.FETCHING_ALBUMS });
 
-    firebaseDB.ref('/').once('value')
-      .then(snapshot => snapshot.val())
-      .then((dates) => {
-        let events = [];
-        Object.keys(dates).forEach(date => events.push({ ...dates[date], date }));
-        dispatch({ type: Actions.FETCH_EVENTS_SUCCESS, events });
+    if (cache.get('albums')) {
+      dispatch({ type: Actions.FETCH_ALBUMS_SUCCESS, albums: cache.get('albums') });
+    } else {
+      axios.get('/cloudinary')
+      .then(response => response.data)
+      .then((data) => {
+        cache.put('albums', data);
+        dispatch({ type: Actions.FETCH_ALBUMS_SUCCESS, albums: data });
       });
+    }
   };
 }

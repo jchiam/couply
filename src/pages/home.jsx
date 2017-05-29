@@ -32,13 +32,6 @@ export default class Home extends Component {
     );
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      index: 0
-    };
-  }
-
   render() {
     return (
       <div className="home">

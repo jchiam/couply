@@ -36,7 +36,13 @@ module.exports = {
     ]
   },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    proxy: {
+      '/cloudinary': {
+        target: 'http://localhost:5002/couply-67e89/us-central1/cloudinary',
+        secure: true
+      }
+    }
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
