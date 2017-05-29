@@ -25,7 +25,7 @@ function getPhotos(prefix, callback) {
     `${CLOUDINARY_BASE_URL}/resources/image/upload`,
     {
       auth: CLOUDINARY_AUTH,
-      params: { prefix }
+      params: { prefix, max_results: 500 }
     }
   )
     .then(response => response.data)
