@@ -29,6 +29,21 @@ class TimelinePage extends Component {
     fetch();
   }
 
+  prevGallery() {
+    const { index } = this.state;
+    if (index > 0) {
+      this.setState({ index: index - 1 });
+    }
+  }
+
+  nextGallery() {
+    const { index } = this.state;
+    const { albums } = this.props;
+    if (index < albums.length - 1) {
+      this.setState({ index: index + 1 });
+    }
+  }
+
   renderGallery() {
     const { index } = this.state;
     const { albums } = this.props;
@@ -49,7 +64,7 @@ class TimelinePage extends Component {
 
     return (
       <div className="gallery">
-        <Gallery images={galleryPhotos} />
+        <Gallery images={galleryPhotos} enableImageSelection={false} />
       </div>
     );
   }
@@ -59,9 +74,9 @@ class TimelinePage extends Component {
     if (dataState === DataStates.Fetched) {
       return (
         <div className="timeline-container">
-          <LeftChevron width={30} />
+          <LeftChevron width={30} onClick={() => this.prevGallery()} />
           {this.renderGallery()}
-          <RightChevron width={30} />
+          <RightChevron width={30} onClick={() => this.nextGallery()} />
         </div>
       );
     }

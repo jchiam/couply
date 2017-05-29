@@ -1,16 +1,23 @@
 @import 'node_modules/sass-material-colors/sass/sass-material-colors';
 @import 'src/style/heart';
 
+$shadow-grey: material-color('grey', '600');
+
 body {
   margin: 0;
+  overflow-y: hidden;
 }
 
 .header-bar {
   align-items: center;
   background: material-color('red', '100');
+  box-shadow: 5px 1px 10px $shadow-grey;
   display: flex;
   height: 37px;
   justify-content: center;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 
   .header-button {
     margin: 0 7px;
@@ -28,6 +35,8 @@ body {
 .home {
   background-color: material-color('red', '100');
   height: 100%;
+  position: relative;
+  top: 37px;
 
   .header {
     @include heart(350px, material-color('cyan', '50'));
@@ -68,29 +77,29 @@ body {
   }
 
   .wallpaper {
-    height: calc(100vh - 40px);
+    height: calc(100vh - 37px);
     width: 110vw;
   }
 }
 
 .timeline {
   background-color: material-color('red', '100');
-  height: 100vh;
-  margin-bottom: -8;
-  margin-left: -8;
-  margin-right: -8;
-  padding: 8;
+  min-height: calc(100vh - 37px);
+  position: relative;
+  top: 37px;
 
   .timeline-container {
     align-items: center;
     display: flex;
-    height: 100%;
+    height: calc(100vh - 37px);
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 10px 20px;
   }
 
   .gallery {
-    margin: 0 20px;
+    height: calc(100vh - 37px);
+    margin: 0 40px;
+    overflow-y: auto;
     width: 100%;
   }
 }
