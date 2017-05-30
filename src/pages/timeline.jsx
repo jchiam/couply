@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import Gallery from 'react-grid-gallery';
 
 import LeftChevron from 'images/chevron_left.svg';
 import RightChevron from 'images/chevron_right.svg';
 import { fetchAlbums } from 'actions';
+import * as Cloudinary from 'cloudinaryUtils';
 import DataStates from 'constants/dataStates';
 import { PhotoProps } from 'propTypes';
 
-class TimelinePage extends Component {
+const PHOTO_HEIGHT = 150;
 
-  static formatTimelineDate(startDay, startMonth, startYear) {
-    return moment(`${startDay} ${startMonth} ${startYear}`, 'DD MM YYYY')
-    .format('DD MMM YYYY');
-  }
+class TimelinePage extends Component {
 
   constructor(props) {
     super(props);
@@ -54,11 +51,13 @@ class TimelinePage extends Component {
 
     const galleryPhotos = [];
     albums[index].photos.forEach((photo) => {
+      const thumbnailTransform = `c_scale,h_${PHOTO_HEIGHT}`;
+      const url = Cloudinary.addTransformationToURL(photo.secure_url, thumbnailTransform);
       galleryPhotos.push({
         src: photo.secure_url,
-        thumbnail: photo.secure_url,
-        thumbnailWidth: 320,
-        thumbnailHeight: 320
+        thumbnail: url,
+        thumbnailWidth: Cloudinary.calcDesiredWidth(photo.height / photo.width, PHOTO_HEIGHT),
+        thumbnailHeight: PHOTO_HEIGHT
       });
     });
 
