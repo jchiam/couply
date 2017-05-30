@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import Gallery from 'react-grid-gallery';
+import Modal from 'react-modal';
 
 import LeftChevron from 'images/chevron_left.svg';
 import RightChevron from 'images/chevron_right.svg';
@@ -18,7 +19,8 @@ class TimelinePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: 0
+      index: 0,
+      thisIsIt: false
     };
   }
 
@@ -30,7 +32,7 @@ class TimelinePage extends Component {
   prevGallery() {
     const { index } = this.state;
     if (index > 0) {
-      this.setState({ index: index - 1 });
+      this.setState({ index: index - 1, thisIsIt: false });
     }
   }
 
@@ -39,6 +41,8 @@ class TimelinePage extends Component {
     const { albums } = this.props;
     if (index < albums.length - 1) {
       this.setState({ index: index + 1 });
+    } else if (index === albums.length - 1) {
+      this.setState({ index: index + 1, thisIsIt: true });
     }
   }
 
@@ -92,8 +96,16 @@ class TimelinePage extends Component {
   }
 
   renderContents() {
+    const { thisIsIt } = this.state;
     const { dataState } = this.props;
     if (dataState === DataStates.Fetched) {
+      if (thisIsIt) {
+        return (
+          <Modal isOpen contentLabel="Modal">
+            <img className="ring" src={process.env.RING} alt="ring" />
+          </Modal>
+        );
+      }
       return (
         <div>
           {this.renderGalleryTitle()}
