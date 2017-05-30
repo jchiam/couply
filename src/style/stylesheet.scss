@@ -88,16 +88,25 @@ body {
   position: relative;
   top: 37px;
 
+  .gallery-title {
+    color: material-color('pink', '400');
+    font-family: 'Baloo', cursive;
+    font-size: 72px;
+    font-style: bold;
+    margin: 0;
+    text-align: center;
+  }
+
   .timeline-container {
     align-items: center;
     display: flex;
-    height: calc(100vh - 37px);
+    height: calc(100vh - 37px - 114px); // minus header and title height
     justify-content: space-between;
     padding: 10px 20px;
   }
 
   .gallery {
-    height: calc(100vh - 37px);
+    height: calc(100vh - 37px - 114px); // minus header and title height
     margin: 0 40px;
     overflow-y: auto;
     width: 100%;

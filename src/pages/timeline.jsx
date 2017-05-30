@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import Gallery from 'react-grid-gallery';
 
 import LeftChevron from 'images/chevron_left.svg';
@@ -68,14 +69,35 @@ class TimelinePage extends Component {
     );
   }
 
+  renderGalleryTitle() {
+    const { index } = this.state;
+    const { albums } = this.props;
+
+    const currentAlbum = albums[index].album;
+    return (
+      <div className="gallery-title">
+        {moment(currentAlbum, 'YYYY-MM').format('MMMM YYYY')}
+      </div>
+    );
+  }
+
   renderTimeline() {
+    return (
+      <div className="timeline-container">
+        <LeftChevron width={30} onClick={() => this.prevGallery()} />
+        {this.renderGallery()}
+        <RightChevron width={30} onClick={() => this.nextGallery()} />
+      </div>
+    );
+  }
+
+  renderContents() {
     const { dataState } = this.props;
     if (dataState === DataStates.Fetched) {
       return (
-        <div className="timeline-container">
-          <LeftChevron width={30} onClick={() => this.prevGallery()} />
-          {this.renderGallery()}
-          <RightChevron width={30} onClick={() => this.nextGallery()} />
+        <div>
+          {this.renderGalleryTitle()}
+          {this.renderTimeline()}
         </div>
       );
     }
@@ -83,11 +105,7 @@ class TimelinePage extends Component {
   }
 
   render() {
-    return (
-      <div className="timeline">
-        {this.renderTimeline()}
-      </div>
-    );
+    return <div className="timeline">{this.renderContents()}</div>;
   }
 }
 
