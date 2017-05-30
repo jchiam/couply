@@ -1,5 +1,11 @@
 import PropTypes from 'prop-types';
 
+export const UserProps = PropTypes.shape({
+  id: PropTypes.string,
+  name: PropTypes.string,
+  photo: PropTypes.string
+});
+
 export const PhotoProps = PropTypes.shape({
   backup: PropTypes.bool,
   bytes: PropTypes.number,

@@ -9,6 +9,8 @@ import { AppContainer } from 'react-hot-loader';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import 'firebaseUtils';
+
 import store from 'store';
 import routes from 'routes';
 

@@ -25,8 +25,8 @@ class TimelinePage extends Component {
   }
 
   componentDidMount() {
-    const { fetch } = this.props;
-    fetch();
+    const { authenticated, fetch } = this.props;
+    fetch(authenticated);
   }
 
   prevGallery() {
@@ -93,6 +93,7 @@ class TimelinePage extends Component {
 }
 
 TimelinePage.propTypes = {
+  authenticated: PropTypes.bool.isRequired,
   albums: PropTypes.arrayOf(PhotoProps).isRequired,
   dataState: PropTypes.string.isRequired,
   fetch: PropTypes.func.isRequired
@@ -100,6 +101,7 @@ TimelinePage.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    authenticated: !!state.auth.token,
     albums: state.timeline.albums,
     dataState: state.timeline.dataState
   };
@@ -107,7 +109,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetch: () => dispatch(fetchAlbums())
+    fetch: authenticated => dispatch(fetchAlbums(authenticated))
   };
 }
 
