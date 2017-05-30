@@ -8,7 +8,8 @@
   "scripts": {
     "start": "webpack-dev-server --hot --progress",
     "build": "rm dist/* && webpack --config webpack.prod.config.js --progress -p",
-    "stage": "yarn build && firebase serve",
+    "stage": "yarn build && firebase serve --only hosting,functions",
+    "functions": "firebase serve --only functions",
     "deploy": "yarn lint && yarn build && firebase deploy",
     "lint-js": "eslint src --ext .jsx",
     "lint-scss": "sass-lint style/*.scss -v -q",
