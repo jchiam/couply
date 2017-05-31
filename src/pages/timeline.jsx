@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import Gallery from 'react-grid-gallery';
+import Modal from 'react-modal';
 
 import LeftChevron from 'images/chevron_left.svg';
 import RightChevron from 'images/chevron_right.svg';
@@ -13,12 +14,37 @@ import { PhotoProps } from 'propTypes';
 
 const PHOTO_HEIGHT = 150;
 
+const modalStyles = {
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    zIndex: 100
+  },
+  content: {
+    position: 'fixed',
+    top: 10,
+    right: 10,
+    bottom: 10,
+    left: 10,
+    padding: 0,
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    overflow: 'auto',
+    WebkitOverflowScrolling: 'touch'
+  }
+};
+
 class TimelinePage extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      index: 0
+      index: 0,
+      thisIsIt: false
     };
   }
 
@@ -30,7 +56,7 @@ class TimelinePage extends Component {
   prevGallery() {
     const { index } = this.state;
     if (index > 0) {
-      this.setState({ index: index - 1 });
+      this.setState({ index: index - 1, thisIsIt: false });
     }
   }
 
@@ -39,6 +65,8 @@ class TimelinePage extends Component {
     const { albums } = this.props;
     if (index < albums.length - 1) {
       this.setState({ index: index + 1 });
+    } else if (index === albums.length - 1) {
+      this.setState({ index: index + 1, thisIsIt: true });
     }
   }
 
@@ -92,8 +120,20 @@ class TimelinePage extends Component {
   }
 
   renderContents() {
+    const { thisIsIt } = this.state;
     const { dataState } = this.props;
     if (dataState === DataStates.Fetched) {
+      if (thisIsIt) {
+        return (
+          <Modal
+            style={modalStyles}
+            contentLabel="Modal"
+            isOpen
+          >
+            <img src={process.env.RING} alt="ring" />
+          </Modal>
+        );
+      }
       return (
         <div>
           {this.renderGalleryTitle()}
