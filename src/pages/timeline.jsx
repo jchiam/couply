@@ -14,6 +14,30 @@ import { PhotoProps } from 'propTypes';
 
 const PHOTO_HEIGHT = 150;
 
+const modalStyles = {
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    zIndex: 100
+  },
+  content: {
+    position: 'fixed',
+    top: 10,
+    right: 10,
+    bottom: 10,
+    left: 10,
+    padding: 0,
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    overflow: 'auto',
+    WebkitOverflowScrolling: 'touch'
+  }
+};
+
 class TimelinePage extends Component {
 
   constructor(props) {
@@ -101,8 +125,12 @@ class TimelinePage extends Component {
     if (dataState === DataStates.Fetched) {
       if (thisIsIt) {
         return (
-          <Modal isOpen contentLabel="Modal">
-            <img className="ring" src={process.env.RING} alt="ring" />
+          <Modal
+            style={modalStyles}
+            contentLabel="Modal"
+            isOpen
+          >
+            <img src={process.env.RING} alt="ring" />
           </Modal>
         );
       }
