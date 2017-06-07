@@ -10,7 +10,7 @@
     "build": "rm dist/* && webpack --config webpack.prod.config.js --progress -p",
     "stage": "yarn build && firebase serve --only hosting,functions",
     "functions": "firebase serve --only functions",
-    "deploy": "yarn lint && yarn build && firebase deploy",
+    "deploy": "yarn build && firebase deploy",
     "deploy:functions": "firebase deploy --only functions",
     "lint-js": "eslint src --ext .jsx",
     "lint-scss": "sass-lint style/*.scss -v -q",
