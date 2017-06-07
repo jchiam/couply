@@ -24,7 +24,7 @@ export default class Home extends Component {
         <div className="header" style={styles.header}>
           <div className="contents">
             <div className="content-less-em">Jon & Becca</div>
-            <div className="content-more-em">{currentDate.diff(startDate, 'days')}</div>
+            <div className="content-more-em">{currentDate.diff(startDate, 'days') + 1}</div>
           </div>
         </div>
         <div className="wallpaper" style={styles.wallpaper} />
