@@ -27,4 +27,4 @@ This is the my (not so) secret engagement project. Frontend is written with Reac
 
 ## Deploy
 1. Login to Firebase with `firebase login`
-1. Deploy the app with `firebase deploy`
+2. Deploy the app with `firebase deploy`
