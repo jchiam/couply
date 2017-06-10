@@ -7,3 +7,6 @@ build:
 
 deploy:
 	firebase deploy --token "$(TOKEN)"
+
+cleanup:
+	find (*|.*) -maxdepth 0 -not -name '.env' -not -name '.git' -not -name 'node_modules' -exec rm -R {} \;
