@@ -1,3 +1,5 @@
+#!groovy
+
 pipeline {
     agent any
 
@@ -25,8 +27,8 @@ pipeline {
     }
 
     post {
-        always {
-            sh 'make cleanup'
+        success {
+            deleteDir()
         }
     }
 }
