@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Pre-build') {
             steps {
-                git 'https://github.com/jchiam/couply.git'
+                slackSend channel: '@jchiam', color: 'good', message: "Build <$BUILD_URL|$JOB_NAME-$BUILD_NUMBER> started!"
                 sh 'make prebuild'
             }
         }
@@ -31,6 +31,13 @@ pipeline {
             dir('dist') {
                 deleteDir()
             }
+            slackSend channel: '@jchiam', color: 'good', message: "Build <$BUILD_URL|$JOB_NAME-$BUILD_NUMBER> succeeded!\nCheck it out at $PRODUCTION_URL"
+        }
+        failure {
+            slackSend channel: '@jchiam', color: 'danger', message: "Build <$BUILD_URL|$BUILD_NUMBER> failed."
+        }
+        unstable {
+            slackSend channel: '@jchiam', color: 'warning', message: "Build <$BUILD_URL|$BUILD_NUMBER> is unstable."
         }
     }
 }
