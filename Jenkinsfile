@@ -31,13 +31,19 @@ pipeline {
             dir('dist') {
                 deleteDir()
             }
-            slackSend channel: '@jchiam', color: 'good', message: "Build <$BUILD_URL|$JOB_NAME-$BUILD_NUMBER> succeeded!\nCheck it out at $PRODUCTION_URL"
+            withCredentials([string(credentialsId: 'jonbecca-slack-token', variable: 'SLACK_TOKEN')]) {
+                slackSend channel: '#couply', color: 'good', message: "Build <$BUILD_URL|$JOB_NAME-$BUILD_NUMBER> succeeded!\nPlease verify at $PRODUCTION_URL", token: "$SLACK_TOKEN"
+            }
         }
         failure {
-            slackSend channel: '@jchiam', color: 'danger', message: "Build <$BUILD_URL|$BUILD_NUMBER> failed."
+            withCredentials([string(credentialsId: 'jonbecca-slack-token', variable: 'SLACK_TOKEN')]) {
+                slackSend channel: '#couply', color: 'danger', message: "Build <$BUILD_URL|$BUILD_NUMBER> failed.", token: "$SLACK_TOKEN"
+            }
         }
         unstable {
-            slackSend channel: '@jchiam', color: 'warning', message: "Build <$BUILD_URL|$BUILD_NUMBER> is unstable."
+            withCredentials([string(credentialsId: 'jonbecca-slack-token', variable: 'SLACK_TOKEN')]) {
+                slackSend channel: '#couply', color: 'warning', message: "Build <$BUILD_URL|$BUILD_NUMBER> is unstable.", token: "$SLACK_TOKEN"
+            }
         }
     }
 }
