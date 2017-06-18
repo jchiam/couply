@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Pre-build') {
             steps {
-                slackSend channel: '@jchiam', color: 'good', message: "Build <$BUILD_URL|$JOB_NAME-$BUILD_NUMBER> started!"
+                slackSend team: 'jonbecca', channel: '#couply', color: 'good', message: "Build <$BUILD_URL|$JOB_NAME-$BUILD_NUMBER> started!"
                 sh 'make prebuild'
             }
         }
@@ -32,17 +32,17 @@ pipeline {
                 deleteDir()
             }
             withCredentials([string(credentialsId: 'jonbecca-slack-token', variable: 'SLACK_TOKEN')]) {
-                slackSend channel: '#couply', color: 'good', message: "Build <$BUILD_URL|$JOB_NAME-$BUILD_NUMBER> succeeded!\nPlease verify at $PRODUCTION_URL", token: "$SLACK_TOKEN"
+                slackSend team: 'jonbecca', channel: '#couply', color: 'good', message: "Build <$BUILD_URL|$JOB_NAME-$BUILD_NUMBER> succeeded!\nPlease verify at $PRODUCTION_URL", token: "$SLACK_TOKEN"
             }
         }
         failure {
             withCredentials([string(credentialsId: 'jonbecca-slack-token', variable: 'SLACK_TOKEN')]) {
-                slackSend channel: '#couply', color: 'danger', message: "Build <$BUILD_URL|$BUILD_NUMBER> failed.", token: "$SLACK_TOKEN"
+                slackSend team: 'jonbecca', channel: '#couply', color: 'danger', message: "Build <$BUILD_URL|$BUILD_NUMBER> failed.", token: "$SLACK_TOKEN"
             }
         }
         unstable {
             withCredentials([string(credentialsId: 'jonbecca-slack-token', variable: 'SLACK_TOKEN')]) {
-                slackSend channel: '#couply', color: 'warning', message: "Build <$BUILD_URL|$BUILD_NUMBER> is unstable.", token: "$SLACK_TOKEN"
+                slackSend team: 'jonbecca', channel: '#couply', color: 'warning', message: "Build <$BUILD_URL|$BUILD_NUMBER> is unstable.", token: "$SLACK_TOKEN"
             }
         }
     }
